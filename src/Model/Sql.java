@@ -14,7 +14,7 @@ public class Sql {
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/epic_rpg";
 
-    //  Database credentials
+    //  Database login
     static final String USER = "root";
     static final String PASS = "";
 
@@ -55,7 +55,7 @@ public class Sql {
         stmt = conn.createStatement();
         ResultSet rs;
         sql = "SELECT * FROM "+tableName+";";
-        sqlSearch = "SELECT * FROM "+tableName+" WHERE "+col+" = '"+search+"';";
+        sqlSearch = "SELECT * FROM "+tableName+" WHERE "+col+" LIKE '%"+search+"%';";
         if (search.equals("")) {
             rs = stmt.executeQuery(sql);
         }else {
@@ -90,6 +90,26 @@ public class Sql {
         stmt.close();
         conn.close();
         return tableModel;
+    }
+
+    public static String getPrimeryKey(String tableName) throws ClassNotFoundException, SQLException {
+        String sql;
+        DefaultListModel menuItems = new DefaultListModel();
+
+        Class.forName(JDBC_DRIVER);
+        conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        stmt = conn.createStatement();
+        sql = "show index from "+tableName+" where Key_name = 'PRIMARY'";
+        ResultSet rs = stmt.executeQuery(sql);
+
+        rs.next();
+        String column = rs.getString("Column_name");
+        System.out.println(column);
+
+        rs.close();
+        stmt.close();
+        conn.close();
+        return column ;
     }
 
 }

@@ -1,8 +1,11 @@
 package View;
 
+import Controller.MyCellEditorListener;
+import Controller.MyKeyListner;
+import Controller.MyMouseListener;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 /**
@@ -25,6 +28,9 @@ public class ElementStyles {
         for (int i = 0; i< count; i++){
             e.getComboBox().addItem(tableModel.getColumnName(i));
         }
+        e.getTable().addKeyListener(new MyKeyListner());
+        e.getTable().addMouseListener(new MyMouseListener());
+
         e.getTable().setModel(tableModel);
         e.getTable().setRowHeight(e.getScreenHeight()/30);
         e.getTable().setFont(new Font("", Font.CENTER_BASELINE, 30));
@@ -37,5 +43,12 @@ public class ElementStyles {
         e.getHeader().setFont(new Font("", Font.CENTER_BASELINE,e.getScreenHeight()/40));
         e.getBar().setPreferredSize(new Dimension(40, 0));
         e.getRightPanel().add(e.getScrollPane());
+
+        e.getEditTextField().setFont(new Font("Verdana", 1, 30));
+        DefaultCellEditor dce = new DefaultCellEditor(e.getEditTextField());
+        dce.addCellEditorListener(new MyCellEditorListener());
+        for (int i = 0; i < e.getTable().getColumnCount(); i++) {
+            e.getTable().getColumnModel().getColumn(i).setCellEditor(dce);
+        }
     }
 }

@@ -31,9 +31,7 @@ public class Elements {
     private JLabel searchLabel = new JLabel();
     private JComboBox comboBox = new JComboBox();
     private JTable table = new JTable();
-
-
-
+    private JTextField editTextField = new JTextField();
     private JScrollPane scrollPane = new JScrollPane();
     private JScrollBar bar = scrollPane.getVerticalScrollBar();
     private JTableHeader header = getTable().getTableHeader();
@@ -123,6 +121,12 @@ public class Elements {
     }
     public void setHeader(JTableHeader header) {
         this.header = header;
+    }
+    public JTextField getEditTextField() {
+        return editTextField;
+    }
+    public void setEditTextField(JTextField editTextField) {
+        this.editTextField = editTextField;
     }
 
     public Dimension getScreen() {

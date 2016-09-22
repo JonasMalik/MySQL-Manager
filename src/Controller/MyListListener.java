@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by jonas on 2016-09-21.
  */
-public class ListListener implements ListSelectionListener {
+public class MyListListener implements ListSelectionListener {
 
     ElementStyles es = ElementStyles.getInstance();
     Elements e = Elements.getInstance();

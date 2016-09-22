@@ -1,23 +1,14 @@
 package View;
 
-import Controller.ListListener;
+import Controller.MyActionListener;
+import Controller.MyListListener;
 import Model.Sql;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
-import javax.swing.text.Element;
-import javax.swing.text.html.FormView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static javax.swing.BorderFactory.createEmptyBorder;
 
@@ -57,7 +48,7 @@ public class MainLayout extends JFrame{
 
         // Left menu list with scroll view
         e.getMenuList().setModel(Sql.getMenuItems());
-        e.getMenuList().addListSelectionListener(new ListListener());
+        e.getMenuList().addListSelectionListener(new MyListListener());
         e.getMenuList().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         e.getMenuList().setSelectedIndex(0);
         e.getMenuList().setForeground(Color.WHITE);
@@ -72,22 +63,7 @@ public class MainLayout extends JFrame{
         e.getLeftPanel().add(menuListScrollPane);
 
         // Botom Widgets
-        e.getSearchField().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                try {
-                    String tableName = e.getMenuList().getSelectedValue().toString();
-                    String colName = e.getComboBox().getSelectedItem().toString();
-                    String serach = e.getSearchField().getText();
-                    es.createTable(Sql.getTablePosts(tableName,colName, serach));
-                } catch (ClassNotFoundException e1) {
-                    e1.printStackTrace();
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-            }
-
-        });
+        e.getSearchField().addActionListener(new MyActionListener());
         e.getSearchField().setVisible(true);
         e.getSearchField().setBounds((e.getScreenWidth()/4) + e.getScreenWidth()/6, 5, e.getScreenWidth()/5, e.getScreenHeight()/30);
         e.getSearchField().setFont(new Font("", Font.CENTER_BASELINE, e.getScreenHeight()/45));
